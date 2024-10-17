@@ -2,6 +2,8 @@
 html, body {
     height: 100%;
     margin: 0px;
+    border: 2px solid black;
+    
 }
 
 
@@ -24,4 +26,21 @@ button {
     font-size: large;
     color: rgb(57, 38, 3);
     font-style: italic;
+    background-color: lightsalmon;
+}
+
+p {
+    margin-bottom: 1px;
+    padding: 6px;
+    background-color: lightskyblue;
+    border: 1px solid black;
+    border-radius: 15%;
+}
+
+a {
+    margin-bottom: 8px;
+    padding: 6px;
+    background-color: white;
+    border: 1px solid blue;
+    margin: 2px;
 }

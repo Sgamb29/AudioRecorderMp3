@@ -3,11 +3,19 @@
 const recordButton = document.getElementById("record");
 const stopButton = document.getElementById("stopRecord");
 
+let currentDateTime = "";
+
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
         .getUserMedia(
             {
-                audio: true,
+                audio:
+                { 
+                    channels: 2, 
+                    autoGainControl: false, 
+                    echoCancellation: false, 
+                    noiseSuppression: false 
+                }
             }
         )
         .then((stream) => {
@@ -18,6 +26,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log("recorder started");
                 recordButton.style.background = "red";
                 recordButton.style.color = "black";
+
+                currentDateTime = getDateTimeString();
+                
               };
 
             let chunks = [];
@@ -37,9 +48,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
               mediaRecorder.onstop = (e) => {
                 console.log("recorder stopped");
               
-                let clipName = prompt("Enter a name for your sound clip");
+                let clipName = prompt("Enter a name for your sound clip, leave blank to use time of recording.");
                 if (clipName == "") {
-                    clipName = "Untitled";
+                    clipName = currentDateTime;
                 }
 
                 const audioLabel = document.createElement("p");
@@ -82,6 +93,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 
+function getDateTimeString() {
+    const dt = new Date();
+    const dateTimeStr = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}-${dt.getHours()}-${dt.getMinutes()}-${dt.getSeconds()}`;
+    return dateTimeStr;
+}
+
+
+// Wake Lock Code
 const screenWake = document.getElementById("screenWake");
 
 let isSupported = false;
