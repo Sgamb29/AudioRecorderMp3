@@ -2,6 +2,7 @@
 
 const recordButton = document.getElementById("record");
 const stopButton = document.getElementById("stopRecord");
+const pauseButton = document.getElementById("pause");
 
 let currentDateTime = "";
 
@@ -36,6 +37,18 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             mediaRecorder.ondataavailable = (e) => {
             chunks.push(e.data);
             };
+
+            pauseButton.onclick = () => {
+                if (mediaRecorder.state === "recording") {
+                    mediaRecorder.pause();
+                    pauseButton.style.backgroundColor = "yellow";
+                    
+                } else if (mediaRecorder.state === "paused") {
+                    mediaRecorder.resume();
+                    pauseButton.style.backgroundColor = "white";
+                }
+            };
+            
 
             stopButton.onclick = () => {
                 mediaRecorder.stop();
